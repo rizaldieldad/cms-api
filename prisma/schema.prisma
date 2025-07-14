@@ -20,19 +20,17 @@ enum Role {
 }
 
 model User {
-  id              Int       @id @default(autoincrement())
-  username        String    @unique
-  first_name      String
-  last_name       String?
-  email           String    @unique
-  hashed_password String
-  bio             String?
-  avatar          String?
-  role            Role      @default(author)
-  last_login      DateTime?
-  refresh_token   String?
-  created_at      DateTime  @default(now())
-  updated_at      DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  googleId      String    @unique
+  email         String    @unique
+  username      String    @unique
+  bio           String?
+  avatar        String?
+  role          Role      @default(author)
+  last_login    DateTime?
+  refresh_token String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
 
   @@map("users")
 }
