@@ -1,20 +1,24 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
+const requestLogger = require('./middlewares/requestLogger')
+const logger = require('./utils/logger')
+const { NotFoundError } = require('./utils/errors')
 
 const app = express()
 
 // app middleware
 app.use(cors())
 app.use(express.json())
+app.use(requestLogger)
 
 // routes
 app.get('/', (req, res) => {
+  logger.info('Handling GET / request')
   res.send('Nodejs CMS API: Hello from server...')
 })
 
 // not found error handler
-const { NotFoundError } = require('./utils/errors')
 app.use((req, res, next) => {
   const error = new NotFoundError(`Route ${req.originalUrl} not found!`)
   next(error)
@@ -34,5 +38,5 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-  console.log(`Server running on port: ${port}`)
+  logger.info(`Server running on port: ${port}`)
 })
